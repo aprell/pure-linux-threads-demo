@@ -1,7 +1,8 @@
 ;; Pure assembly, library-free Linux threading demo
 bits 64
 global _start
-global puts
+global thread_create
+global puts, exit
 extern main
 
 ;; sys/syscall.h
@@ -48,8 +49,8 @@ _start:
 	mov rdi, rax
 	jmp exit
 
+;; void exit(int) -- does not return
 exit:
-	mov rdi, 0
 	mov rax, SYS_exit
 	syscall
 
