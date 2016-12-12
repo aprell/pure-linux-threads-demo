@@ -1,9 +1,10 @@
 NASM ?= nasm
 NASMFLAGS = -Fdwarf -g
+CPPFLAGS = -Wall -Wextra -g
 
 all: threads.x86_64
 
-threads.x86_64: threads-x86_64.o
+threads.x86_64: threads-x86_64.o main.o
 	$(LD) -melf_x86_64 $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
 threads.i386: threads-i386.o

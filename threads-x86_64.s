@@ -1,6 +1,8 @@
 ;; Pure assembly, library-free Linux threading demo
 bits 64
 global _start
+global puts
+extern main
 
 ;; sys/syscall.h
 %define SYS_write	1
@@ -42,19 +44,14 @@ count:	dq MAX_LINES
 
 section .text
 _start:
-	; Spawn a few threads
-	mov rdi, threadfn
-	call thread_create
-	mov rdi, threadfn
-	call thread_create
+	call main
+	mov rdi, rax
+	jmp exit
 
-.loop:	call check_count
-	mov rdi, .hello
-	call puts
+exit:
 	mov rdi, 0
-	jmp .loop
-
-.hello:	db `Hello from \e[93;1mmain\e[0m!\n\0`
+	mov rax, SYS_exit
+	syscall
 
 ;; void threadfn(void)
 threadfn:
