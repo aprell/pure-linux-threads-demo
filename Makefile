@@ -4,13 +4,16 @@ CPPFLAGS = -Wall -Wextra -g
 
 all: threads.x86_64
 
-threads.x86_64: threads-x86_64.o main.o
+threads.x86_64: threads-x86_64.o lib.o main.o
 	$(LD) -melf_x86_64 $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
 threads.i386: threads-i386.o
 	$(LD) -melf_i386 $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
 threads-x86_64.o: threads-x86_64.s
+	$(NASM) -felf64 $(NASMFLAGS) -o $@ $^
+
+lib.o: lib.s
 	$(NASM) -felf64 $(NASMFLAGS) -o $@ $^
 
 threads-i386.o: threads-i386.s

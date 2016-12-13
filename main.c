@@ -1,5 +1,5 @@
-int puts(const char *);
-void exit(int);
+#include "lib.h"
+
 long thread_create(void (*)(void));
 
 void threadfn(void)

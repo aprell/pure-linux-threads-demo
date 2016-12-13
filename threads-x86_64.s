@@ -2,7 +2,8 @@
 bits 64
 global _start
 global thread_create
-global puts, exit
+extern puts
+extern exit
 extern main
 
 ;; sys/syscall.h
@@ -49,11 +50,6 @@ _start:
 	mov rdi, rax
 	jmp exit
 
-;; void exit(int) -- does not return
-exit:
-	mov rax, SYS_exit
-	syscall
-
 ;; void threadfn(void)
 threadfn:
 	call check_count
@@ -71,19 +67,6 @@ check_count:
 .exit	mov rdi, 0
 	mov rax, SYS_exit
 	syscall
-
-;; int puts(const char *)
-puts:
-	mov rsi, rdi
-	mov rdx, -1
-.count:	inc rdx
-	cmp byte [rsi + rdx], 0
-	jne .count
-	mov rdi, STDOUT
-	mov rax, SYS_write
-	syscall
-	mov rax, 3
-	ret
 
 ;; long thread_create(void (*)(void))
 thread_create:
