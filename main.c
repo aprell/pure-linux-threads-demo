@@ -1,3 +1,7 @@
+void puts(const char *);
+void exit(int);
+long thread_create(void (*)(void));
+
 void threadfn(void)
 {
 	puts("Hello from \e[91;1mthread\e[0m!\n");
