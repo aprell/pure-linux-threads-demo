@@ -1,4 +1,4 @@
-void puts(const char *);
+int puts(const char *);
 void exit(int);
 long thread_create(void (*)(void));
 

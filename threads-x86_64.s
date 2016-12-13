@@ -72,7 +72,7 @@ check_count:
 	mov rax, SYS_exit
 	syscall
 
-;; void puts(char *)
+;; int puts(const char *)
 puts:
 	mov rsi, rdi
 	mov rdx, -1
@@ -82,6 +82,7 @@ puts:
 	mov rdi, STDOUT
 	mov rax, SYS_write
 	syscall
+	mov rax, 3
 	ret
 
 ;; long thread_create(void (*)(void))
