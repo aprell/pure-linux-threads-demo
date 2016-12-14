@@ -1,6 +1,5 @@
 #include "lib.h"
-
-long thread_create(void (*)(void));
+#include "thread.h"
 
 void threadfn(void)
 {
